@@ -11,7 +11,20 @@ export class AuthService{
         if(existUser) throw CustomError.badReques('Email already exist');
 
 
-        return 'Todo ok'
+        try {
+            const user = new UserModel(registerUserDto)
+            await user.save()
+
+            // Encriptar la contraseña
+
+            // JWT <--------- autenticacion de usuario
+
+            // Email de confirmacion
+
+            return user
+        } catch (error) {
+            throw CustomError.internalServer(`${error}`)
+        }
 
 
     }
