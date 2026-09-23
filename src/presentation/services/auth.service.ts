@@ -1,5 +1,5 @@
 import { UserModel } from "../../data/index.js";
-import { CustomError, type RegisterUserDto } from "../../domain/index.js";
+import { CustomError, UserEntity, type RegisterUserDto } from "../../domain/index.js";
 
 export class AuthService{ 
 
@@ -20,6 +20,13 @@ export class AuthService{
             // JWT <--------- autenticacion de usuario
 
             // Email de confirmacion
+
+            const { password, ...userEntity} = UserEntity.fromObejet(user);
+
+            return {
+                user: userEntity, 
+                token: 'abc'
+            }
 
             return user
         } catch (error) {
