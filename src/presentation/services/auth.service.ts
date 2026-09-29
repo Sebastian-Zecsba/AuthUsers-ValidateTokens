@@ -48,8 +48,9 @@ export class AuthService{
 
             const { password, ...userEntity } = UserEntity.fromObejet(user)
 
-            const token = JwtAdapter.generateToken({id: user.id})
+            const token = await JwtAdapter.generateToken({id: user.id, email: user.email})
             if(!token) throw CustomError.internalServer('Erro while creating TOKEN')
+            
 
             return { 
                 user: userEntity,
