@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { AuthController } from './controller.js';
 import { EmailService, AuthService } from '../services/index.js';
 import { envs } from '../../config/envs.js';
+import { env } from 'node:process';
 
 
 
@@ -15,7 +16,8 @@ export class AuthRoutes {
     const emailService = new EmailService(
       envs.MAILER_SERVICE,
       envs.MAILER_EMAIL,
-      envs.MAILER_SECRET_KEY
+      envs.MAILER_SECRET_KEY,
+      envs.SEND_EMAIL
     )
 
     const authService = new AuthService(emailService)

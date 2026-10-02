@@ -75,7 +75,8 @@ export class AuthService{
         const token = await JwtAdapter.generateToken({email: email})        
         if(!token) throw CustomError.internalServer('Error getting token')
 
-        const link = `${envs.WEBSERVICE_URL}/auth/validate-email/${token}`
+        // const link = `${envs.WEBSERVICE_URL}/auth/validate-email/${token}`
+        const link = `https://app.zecsba.online/api/auth/validate-email/${token}`
 
         const html = `
             <h1> Validate your email </h1>
