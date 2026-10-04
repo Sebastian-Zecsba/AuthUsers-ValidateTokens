@@ -18,12 +18,13 @@ export class JwtAdapter {
         });
     }
 
-    static valideToken(token: string){
+    static valideToken<T>(token: string): Promise<T | null>{
+
         return new Promise((resolve) => { 
             jwt.verify(token, JWT_SEED, (err, decoded) => { 
                 if(err) return resolve(null)
 
-                resolve(decoded)
+                resolve(decoded as T)
             })
         })
     }
