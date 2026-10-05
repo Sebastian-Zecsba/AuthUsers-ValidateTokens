@@ -23,11 +23,13 @@ export class AuthMiddleware {
             const payload = await JwtAdapter.valideToken<{id: string}>(token)
             if(!payload) return res.status(401).json({error: 'Invalid token'})
 
+                
             const user = await UserModel.findById(payload.id)
             if(!user) return res.status(401).json({error: 'Invalid token - user'})
-
+                    
             // TODO : Validar si el usuario esta activo
-
+            
+            req.body = req.body || {};
             req.body.user = UserEntity.fromObejet(user);
 
             next();
@@ -36,8 +38,6 @@ export class AuthMiddleware {
             console.log(error)
             return CustomError.internalServer('Internal server error')
         }
-
-        next();
     }
 
 }

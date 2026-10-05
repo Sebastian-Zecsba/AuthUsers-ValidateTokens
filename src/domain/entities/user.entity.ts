@@ -9,7 +9,7 @@ export class UserEntity {
         public emailValidated: boolean,
         public password: string,
         public role: string[],
-        public img?: string
+        public img?: string 
     ){}
 
     static fromObejet(object: {[key:string]:any}) : UserEntity{ 
