@@ -36,9 +36,9 @@ export class ProductsController {
         const [error, paginationDto ] = PagitaionDto.create(+page, +limit)
         if(error) return res.status(400).json({error});
 
-        res.json('From get Product')
-
-
+        this.productService.getProducts(paginationDto!)
+            .then(product => res.status(201).json(product))
+            .catch(error => this.handleError(error, res))
     }
 
 
