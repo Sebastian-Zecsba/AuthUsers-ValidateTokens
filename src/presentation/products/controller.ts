@@ -1,12 +1,13 @@
 import type { Request, Response } from "express"
-import { CustomError, PagitaionDto } from "../../domain/index.js"
+import { CreateProductDto, CustomError, PagitaionDto } from "../../domain/index.js"
+import type { ProductService } from "../services/product.service.js"
 
 
 export class ProductsController { 
 
     // DI
     constructor(
-        // TODO: private readonly productService: ProductService
+        private readonly productService: ProductService
     ) {}
 
     private handleError = (error: unknown, res: Response) => {
@@ -20,7 +21,12 @@ export class ProductsController {
 
 
     createProduct = (req: Request, res: Response ) => {
-        res.json('From create Product')
+        const [ error, createProductDto] = CreateProductDto.create(req.body)
+        if(error) return res.status(400).json({error});
+
+        this.productService.createProducts(createProductDto!)
+            .then(product => res.status(201).json(product))
+            .catch(error => this.handleError(error, res))
 
     }
 
