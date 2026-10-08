@@ -9,11 +9,10 @@ export class ProductService{
     async createProducts(createProductDto: CreateProductDto){ 
         const productExist = await ProductModel.findOne({ name: createProductDto.name}) 
         if(productExist) throw CustomError.badReques('Product already exists')
-        
+
         try {
             
-            const product = new ProductModel(productExist)
-
+            const product = new ProductModel(createProductDto)
             await product.save()
 
             return product;

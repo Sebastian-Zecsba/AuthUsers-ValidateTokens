@@ -21,9 +21,12 @@ export class ProductsController {
 
 
     createProduct = (req: Request, res: Response ) => {
-        const [ error, createProductDto] = CreateProductDto.create(req.body)
+        const [ error, createProductDto] = CreateProductDto.create({
+            ...req.body,
+            user: req.body.user.id
+        })
         if(error) return res.status(400).json({error});
-
+        
         this.productService.createProducts(createProductDto!)
             .then(product => res.status(201).json(product))
             .catch(error => this.handleError(error, res))
